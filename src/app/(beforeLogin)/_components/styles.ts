@@ -7,7 +7,6 @@ const Section = styled.section`
 
 export const AccountSection = styled(Section)`
   padding-top: 2.5rem;
-  padding-bottom: 3rem;
 `;
 
 export const UserSection = styled(Section)`

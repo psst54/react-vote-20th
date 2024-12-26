@@ -19,7 +19,7 @@ export default function NameInput() {
     <Container>
       <InputContainer>
         <PersonIcon />
-        <Input placeholder="이름" type="text" />
+        <Input placeholder="아이디" type="text" required name="id" />
       </InputContainer>
     </Container>
   );

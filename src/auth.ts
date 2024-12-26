@@ -1,5 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import type { NextAuthOptions } from "next-auth";
+import { getServerSession } from "next-auth";
+import { signIn as nextSignIn } from "next-auth/react";
 
 export const authOptions: NextAuthOptions = {
   pages: {
@@ -46,3 +48,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
 };
+
+// signIn과 authOptions 내보내기
+export const signIn = nextSignIn;
+export const getSession = getServerSession;

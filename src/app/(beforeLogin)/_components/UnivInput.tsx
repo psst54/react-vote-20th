@@ -1,23 +1,29 @@
-import { useRef, useState } from 'react';
-import styled from 'styled-components';
-import DownChevronIcon from '@/assets/DownChevronIcon';
-import Text from '@/components/atoms/Text';
+import { useState } from "react";
+import styled from "styled-components";
+import DownChevronIcon from "@/assets/DownChevronIcon";
+import Text from "@/components/atoms/Text";
 
 export interface Option {
   value: string;
   label: string;
 }
 
-const Container = styled.div<{ $isOpen: boolean }>`
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+`;
+
+const FilterWrapper = styled.div<{ $isOpen: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.125rem;
-
   padding: 0.5rem 1rem;
   background: transparent;
   border: 1px solid ${({ theme }) => theme.colors.gray[200]};
-  border-radius: ${({ $isOpen }) => ($isOpen ? '0.5rem 0.5rem 0 0' : '0.5rem')};
+  border-radius: ${({ $isOpen }) => ($isOpen ? "0.5rem 0.5rem 0 0" : "0.5rem")};
+  cursor: pointer;
 `;
 
 const FilterText = styled(Text)`
@@ -28,86 +34,81 @@ const Backdrop = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  background: transparent;
   width: 100%;
   height: 100%;
-
-  z-index: 20; // 임의로 설정
+  background: transparent;
+  z-index: 20;
 `;
 
 const OptionWrapper = styled.div`
   position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-
+  top: 100%;
+  left: 0;
   width: 100%;
   background: ${({ theme }) => theme.colors.background.primary};
   border: 1px solid ${({ theme }) => theme.colors.gray[200]};
   border-top: none;
   border-radius: 0 0 0.5rem 0.5rem;
-
-  z-index: 21; // 임의로 설정
+  z-index: 21;
 `;
+
 const OptionItem = styled.button`
   width: 100%;
   padding: 0.5rem 1rem;
-
   background: transparent;
   border: none;
-  outline: none;
-
   text-align: start;
-
   cursor: pointer;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.gray[100]};
+  }
 `;
 
-type Value = 'sogang' | 'yonsei' | 'ewha' | 'hongik';
+interface DropdownProps {
+  options: Option[];
+  placeholder?: string;
+  onSelect: (value: string) => void;
+}
 
-const OPTION_LIST: { label: string; value: Value }[] = [
-  { label: '서강대학교', value: 'sogang' },
-  { label: '연세대학교', value: 'yonsei' },
-  { label: '이화여자대학교', value: 'ewha' },
-  { label: '홍익대학교', value: 'hongik' },
-];
-
-export default function UnivInput() {
-  const [value, setValue] = useState<Value | null>(null);
+export default function Dropdown({
+  options,
+  placeholder = "Select an option",
+  onSelect,
+}: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const selectorRef = useRef<HTMLDivElement | null>(null);
-  const optionRef = useRef<HTMLDivElement | null>(null);
+  const [selectedValue, setSelectedValue] = useState<string | null>(null);
 
-  const onOpen = () => {
-    setIsOpen(true);
-  };
-  const onClose = () => {
-    setIsOpen(false);
+  const handleOpen = () => setIsOpen(true);
+  const handleClose = () => setIsOpen(false);
+
+  const handleSelect = (value: string) => {
+    setSelectedValue(value);
+    onSelect(value);
+    handleClose();
   };
 
-  const currentLabel = OPTION_LIST.find(
-    (option) => option.value === value,
+  const currentLabel = options.find(
+    (option) => option.value === selectedValue,
   )?.label;
 
   return (
-    <div style={{ position: 'relative' }}>
-      <Container ref={selectorRef} onClick={onOpen} $isOpen={isOpen}>
+    <Container>
+      <FilterWrapper onClick={handleOpen} $isOpen={isOpen}>
         <FilterText variant="body1_rg">
-          {currentLabel || '학교 선택'}
+          {currentLabel || placeholder}
         </FilterText>
         <DownChevronIcon />
-      </Container>
+      </FilterWrapper>
 
       {isOpen && (
         <>
-          <Backdrop onClick={onClose} />
-          <OptionWrapper ref={optionRef}>
-            {OPTION_LIST.map((option) => (
+          <Backdrop onClick={handleClose} />
+          <OptionWrapper>
+            {options.map((option) => (
               <OptionItem
                 key={option.value}
-                onClick={() => {
-                  setValue(option.value);
-                  onClose();
-                }}
+                onClick={() => handleSelect(option.value)}
               >
                 <FilterText variant="body1_rg">{option.label}</FilterText>
               </OptionItem>
@@ -115,6 +116,6 @@ export default function UnivInput() {
           </OptionWrapper>
         </>
       )}
-    </div>
+    </Container>
   );
 }
