@@ -1,5 +1,5 @@
-import Text from '@/components/atoms/Text';
-import { Header } from './styles';
+import Text from "@/app/_components/atoms/Text";
+import { Header } from "./styles";
 
 export default function Title({ text }: { text: string }) {
   return (

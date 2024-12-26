@@ -1,7 +1,7 @@
-import styled, { DefaultTheme } from 'styled-components';
-import Text from '@/components/atoms/Text';
+import styled, { DefaultTheme } from "styled-components";
+import Text from "@/app/_components/atoms/Text";
 
-type Variant = 'primary' | 'secondary';
+type Variant = "primary" | "secondary";
 
 const getBackgroundColor = ({
   theme,
@@ -15,7 +15,7 @@ const getBackgroundColor = ({
   if (disabled) {
     return theme.colors.gray[600];
   }
-  if (variant === 'primary') {
+  if (variant === "primary") {
     return theme.colors.primary[100];
   }
   return theme.colors.gray[900];
@@ -39,7 +39,7 @@ const ButtonText = styled(Text)`
 
 export default function CTAButton({
   text,
-  variant = 'primary',
+  variant = "primary",
   disabled = false,
   onClick = () => {},
 }: {

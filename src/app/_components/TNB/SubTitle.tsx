@@ -1,5 +1,5 @@
-import Text from '@/components/atoms/Text';
-import { BorderedHeader } from './styles';
+import Text from "@/app/_components/atoms/Text";
+import { BorderedHeader } from "./styles";
 
 export default function SubTitle({ text }: { text: string }) {
   return (

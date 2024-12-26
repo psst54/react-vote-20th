@@ -1,5 +1,5 @@
-import BREAK_POINT from '@/styles/constants';
-import styled from 'styled-components';
+import BREAK_POINT from "@/styles/constants";
+import styled from "styled-components";
 
 export const FullPage = styled.div`
   height: 100dvh;

@@ -1,9 +1,9 @@
-import { useCallback } from 'react';
-import { useRouter } from 'next/navigation';
-import styled from 'styled-components';
-import Text from '@/components/atoms/Text';
-import LeftChevronIcon from '@/assets/LeftChevronIcon';
-import { BorderedHeader } from './styles';
+import { useCallback } from "react";
+import { useRouter } from "next/navigation";
+import styled from "styled-components";
+import Text from "@/app/_components/atoms/Text";
+import LeftChevronIcon from "@/assets/LeftChevronIcon";
+import { BorderedHeader } from "./styles";
 
 const IconWrapper = styled.button`
   position: absolute;

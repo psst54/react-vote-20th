@@ -1,13 +1,13 @@
-import styled from 'styled-components';
-import Text from '@/components/atoms/Text';
+import styled from "styled-components";
+import Text from "@/app/_components/atoms/Text";
 
-type Variant = 'primary' | 'secondary';
+type Variant = "primary" | "secondary";
 
 const TagContainer = styled.div<{ variant: Variant }>`
   width: fit-content;
   padding: 0.375rem 1rem;
   background: ${({ theme, variant }) =>
-    variant === 'primary' ? theme.colors.gray[100] : theme.colors.gray[900]};
+    variant === "primary" ? theme.colors.gray[100] : theme.colors.gray[900]};
   border-radius: 1.5rem;
 `;
 
@@ -28,7 +28,7 @@ export default function Tag({
 }) {
   return (
     <TagContainer variant={variant}>
-      {variant === 'primary' ? (
+      {variant === "primary" ? (
         <PrimaryText variant="body3">{text}</PrimaryText>
       ) : (
         <SecondaryText variant="body3">{text}</SecondaryText>
