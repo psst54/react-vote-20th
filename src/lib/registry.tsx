@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import { useServerInsertedHTML } from 'next/navigation';
+import React, { useState } from "react";
+import { useServerInsertedHTML } from "next/navigation";
 import {
   createGlobalStyle,
   ServerStyleSheet,
   StyleSheetManager,
   ThemeProvider,
-} from 'styled-components';
-import theme from '@/styles/theme';
+} from "styled-components";
+import theme from "@/styles/theme";
 
 const GlobalStyle = createGlobalStyle`
   /* http://meyerweb.com/eric/tools/css/reset/ 
@@ -82,7 +82,7 @@ export default function StyledComponentsRegistry({
     return styles;
   });
 
-  if (typeof window !== 'undefined')
+  if (typeof window !== "undefined")
     return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 
   return (
