@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import Text from "@/components/atoms/Text";
-import { convertToViewportHeight } from "@/styles/convertSize";
-import Link from "next/link";
-import CTAButton from "@/app/_components/atoms/CTAButton";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { signIn } from "next-auth/react";
+import Text from '@/components/atoms/Text';
+import { convertToViewportHeight } from '@/styles/convertSize';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { signIn } from 'next-auth/react';
+import CTAButton from '@/components/atoms/CTAButton';
 
 const Container = styled.div`
   display: flex;
@@ -71,24 +71,24 @@ const SignUpText = styled(Text)`
 `;
 
 export default function SignInPage() {
-  const [id, setId] = useState("");
-  const [password, setPassword] = useState("");
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const result = await signIn("credentials", {
+    const result = await signIn('credentials', {
       redirect: false, // 서버 리다이렉션 방지
       id,
       password,
     });
 
     console.log(result);
-    router.replace("/home");
+    router.replace('/home');
 
     if (result?.error) {
-      alert("로그인 실패: 아이디 또는 비밀번호를 확인하세요.");
+      alert('로그인 실패: 아이디 또는 비밀번호를 확인하세요.');
     } else {
       // 로그인 성공 시 홈으로 이동
       // router.push("/home");

@@ -1,13 +1,16 @@
-"use client";
+'use client';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { convertToViewportHeight } from "@/styles/convertSize";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { signIn } from "next-auth/react";
-import Text
+import Text from '@/components/atoms/Text';
+import { convertToViewportHeight } from '@/styles/convertSize';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { signIn } from 'next-auth/react';
+import CTAButton from '@/components/atoms/CTAButton';
+import Card from '@/components/Card';
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -69,26 +72,16 @@ const SignUpText = styled(Text)`
 `;
 
 export default function Home() {
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
   const router = useRouter();
-
 
   return (
     <Container>
       <Text variant="header1">파트장 / 데모데이 투표</Text>
 
-      <Form onSubmit={handleLogin}>
-        <InputContainer>
-          <Input value={id} onChange={handleIdChange} placeholder="아이디" />
-          <Input
-            value={password}
-            onChange={handlePasswordChange}
-            type="password"
-            placeholder="비밀번호"
-          />
-        </InputContainer>
-
-        <CTAButton text="로그인" />
-      </Form>
+      <Card content="파트장 투표 바로가기" />
+      <Card content="데모데이 투표 바로가기" />
       {/* [todo] 링크 변경 */}
       <StyledLink href="/signup">
         <SignUpText variant="caption1_rg">회원가입 </SignUpText>

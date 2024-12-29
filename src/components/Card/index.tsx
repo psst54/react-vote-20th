@@ -7,8 +7,7 @@ import './card.css';
 export interface CardProps {
   /** How large should the card be? */
   size?: 'small' | 'medium' | 'large' | 'dynamic';
-  /** What card image to use */
-  src: string;
+
   /** Card Title */
   title?: string;
   /** Card Content */
@@ -23,26 +22,13 @@ const CardWrapper = styled.div`
   cursor: pointer;
 `;
 
-const CardImage = styled.img`
-  object-fit: cover;
-  margin-bottom: 0.5rem;
-  border-radius: 0.125rem;
-`;
-
 const CardContent = styled(Text)`
   color: ${({ theme }) => theme.colors.gray[200]};
 `;
 
-export default function Card({
-  size,
-  src,
-  title,
-  content,
-  onClick,
-}: CardProps) {
+export default function Card({ size, title, content, onClick }: CardProps) {
   return (
     <CardWrapper onClick={onClick} className={`card ${size}`}>
-      <CardImage src={src} alt={title} />
       <Text variant="body1_md">{title}</Text>
       <CardContent variant="body3">{content}</CardContent>
     </CardWrapper>
