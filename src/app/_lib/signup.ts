@@ -1,5 +1,6 @@
 "use server";
 
+// [회원 가입 처리]
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:4000";
 // type 합치기(signup)
 type FormState = {
@@ -41,6 +42,7 @@ export default async function onSubmit(
         "Content-Type": "application/json",
       },
     });
+    console.log(response);
 
     if (response.status === 403) {
       return { message: "user_exists", formData: null };

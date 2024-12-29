@@ -6,6 +6,9 @@ import Text from "@/components/atoms/Text";
 import { convertToViewportHeight } from "@/styles/convertSize";
 import Link from "next/link";
 import CTAButton from "@/app/_components/atoms/CTAButton";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
 
 const Container = styled.div`
   display: flex;
@@ -68,14 +71,50 @@ const SignUpText = styled(Text)`
 `;
 
 export default function SignInPage() {
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const result = await signIn("credentials", {
+      redirect: false, // 서버 리다이렉션 방지
+      id,
+      password,
+    });
+
+    console.log(result);
+    router.replace("/home");
+
+    if (result?.error) {
+      alert("로그인 실패: 아이디 또는 비밀번호를 확인하세요.");
+    } else {
+      // 로그인 성공 시 홈으로 이동
+      // router.push("/home");
+    }
+  };
+
+  const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setId(e.target.value);
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
   return (
     <Container>
       <Text variant="header1">SIGN IN!</Text>
 
-      <Form>
+      <Form onSubmit={handleLogin}>
         <InputContainer>
-          <Input placeholder="아이디" />
-          <Input type="password" placeholder="비밀번호" />
+          <Input value={id} onChange={handleIdChange} placeholder="아이디" />
+          <Input
+            value={password}
+            onChange={handlePasswordChange}
+            type="password"
+            placeholder="비밀번호"
+          />
         </InputContainer>
 
         <CTAButton text="로그인" />

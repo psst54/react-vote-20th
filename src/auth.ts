@@ -5,14 +5,14 @@ import { signIn as nextSignIn } from "next-auth/react";
 
 export const authOptions: NextAuthOptions = {
   pages: {
-    signIn: "/i/flow/login",
-    newUser: "/i/flow/signup",
+    signIn: "/signin",
+    newUser: "/signup",
   },
   providers: [
     CredentialsProvider({
       credentials: {
-        username: { label: "Username", type: "text" },
-        password: { label: "Password", type: "password" },
+        id: { label: "id", type: "text" },
+        password: { label: "password", type: "password" },
       },
       async authorize(credentials) {
         if (!credentials) {
@@ -20,14 +20,14 @@ export const authOptions: NextAuthOptions = {
         }
 
         const authResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/login`,
+          `${process.env.NEXT_PUBLIC_BASE_URL}/signin`,
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              id: credentials.username,
+              id: credentials.id,
               password: credentials.password,
             }),
           },

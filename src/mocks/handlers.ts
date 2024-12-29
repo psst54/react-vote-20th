@@ -10,9 +10,18 @@ function generateDate() {
   // });
 }
 const User = [
-  { id: "elonmusk", nickname: "Elon Musk", image: "/yRsRRjGO.jpg" },
-  { id: "zerohch0", nickname: "제로초", image: "/5Udwvqim.jpg" },
-  // { id: "leoturtle", nickname: "레오", image: faker.image.avatar() },
+  {
+    id: "elonmusk",
+    nickname: "Elon Musk",
+    image: "/yRsRRjGO.jpg",
+    password: "1234",
+  },
+  {
+    id: "zerohch0",
+    nickname: "제로초",
+    image: "/5Udwvqim.jpg",
+    password: "1234",
+  },
 ];
 const Posts = [];
 const delay = (ms: number) =>
@@ -21,13 +30,20 @@ const delay = (ms: number) =>
   });
 
 export const handlers = [
-  http.post("/api/login", () => {
+  http.post("/signin", async ({ request }) => {
     console.log("로그인");
-    return HttpResponse.json(User[1], {
-      headers: {
-        "Set-Cookie": "connect.sid=msw-cookie;HttpOnly;Path=/",
-      },
-    });
+    const body = (await request.json()) as { id: string; password: string };
+    const { id, password } = body;
+
+    const user = User.find((u) => u.id === id && u.password === password);
+    if (user) {
+      return HttpResponse.json(user, {
+        headers: {
+          "Set-Cookie": "session=mock-session; HttpOnly; Path=/",
+        },
+      });
+    }
+    return HttpResponse.text("Invalid credentials", { status: 401 });
   }),
   http.post("/api/logout", () => {
     console.log("로그아웃");
