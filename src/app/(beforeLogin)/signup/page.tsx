@@ -51,6 +51,7 @@ export default function Main() {
       setState(result);
       if (result.message === "signup_success") {
         console.log("Signup successful!");
+        console.log(result.formData);
       }
     } catch (error) {
       console.error("Error during signup:", error);
