@@ -1,16 +1,12 @@
 'use client';
 
 import styled from 'styled-components';
-
-import Text from '@/components/atoms/Text';
-import { convertToViewportHeight } from '@/styles/convertSize';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { signIn } from 'next-auth/react';
-import CTAButton from '@/components/atoms/CTAButton';
+import { useParams } from 'next/navigation';
+import Text from '@/components/atoms/Text';
 import Card from '@/components/Card';
 
+// 스타일 컴포넌트 정의
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -19,33 +15,36 @@ const Container = styled.div`
   margin: 0 1rem;
   gap: 1rem;
 `;
+
 const CardWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
 `;
-export default function Home() {
-  const router = useRouter();
 
+export default function VotePage() {
+  const router = useRouter();
+  const params = useParams(); // 동적 라우트 매개변수 접근
+
+  const pageTitle = '파트장 투표';
   const handleNavigation = (path: string) => {
     router.push(`/vote/${path}`);
   };
-
   return (
     <Container>
-      <Text variant="header1">투표 카테고리를 선택하세요</Text>
+      <Text variant="header1">{pageTitle}</Text>
       <CardWrapper>
         <Card
           size="large"
-          content="파트장 투표"
-          onClick={() => handleNavigation('part')}
+          content="FE파트장장"
+          onClick={() => handleNavigation('front-end')}
         />
 
         <Card
           size="large"
           content="데모데이 투표"
-          onClick={() => handleNavigation('demo-day')}
+          onClick={() => handleNavigation('back-end')}
         />
       </CardWrapper>
     </Container>
