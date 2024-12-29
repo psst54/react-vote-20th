@@ -1,27 +1,14 @@
-/* 버튼 크기 */
 .card.small {
   width: 12rem;
   height: 5rem;
 }
 
 .card.medium {
-  img {
-    width: 16rem;
-    height: 6rem;
-  }
+  width: 16rem;
+  height: 6rem;
 }
 
-/* todo : 크기 수정해야함 */
 .card.large {
   width: 18rem;
   height: 18rem;
-  /* padding: 12px 20px; */
-}
-
-/* todo : masonry에 들어갈 동적 크기 card */
-.card.dynamic {
-  img {
-    width: 100%;
-    height: auto;
-  }
 }

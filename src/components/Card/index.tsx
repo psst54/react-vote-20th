@@ -1,36 +1,58 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Text from '../atoms/Text';
 
-import './card.css';
-
 export interface CardProps {
-  /** How large should the card be? */
-  size?: 'small' | 'medium' | 'large' | 'dynamic';
-
-  /** Card Title */
+  size?: 'small' | 'medium' | 'large';
   title?: string;
-  /** Card Content */
   content?: string;
-  /** Optional click handler */
+  voteCount?: number; // 투표 수 표시
+  selected?: boolean; // 선택된 카드인지 여부
   onClick?: () => void;
 }
 
-const CardWrapper = styled.div`
+const CardWrapper = styled.div<{ selected?: boolean }>`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  // width: 100%;
   cursor: pointer;
+  border: 2px solid ${({ theme }) => theme.colors.primary[100]};
+  border-radius: 8px;
+  padding: 1rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.primary[100]};
+  }
 `;
 
-const CardContent = styled(Text)`
-  color: ${({ theme }) => theme.colors.gray[200]};
+const VoteCount = styled(Text)`
+  margin-top: 0.5rem;
+  font-weight: bold;
+  color: ${({ theme }) => theme.colors.gray[600]};
 `;
 
-export default function Card({ size, title, content, onClick }: CardProps) {
+export default function Card({
+  size,
+  title,
+  content,
+  voteCount,
+  selected,
+  onClick,
+}: CardProps) {
   return (
-    <CardWrapper onClick={onClick} className={`card ${size}`}>
+    <CardWrapper
+      selected={selected}
+      onClick={onClick}
+      className={`card ${size}`}
+    >
       <Text variant="body1_md">{title}</Text>
-      <CardContent variant="body3">{content}</CardContent>
+      {content && <Text variant="body3">{content}</Text>}
+      {voteCount !== undefined && (
+        <VoteCount variant="body3">Votes: {voteCount}</VoteCount>
+      )}
     </CardWrapper>
   );
 }
