@@ -5,70 +5,37 @@ import { useRouter } from 'next/navigation';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import Text from '@/components/atoms/Text';
-import Card from '@/components/Card';
 import CTAButton from '@/components/atoms/CTAButton';
 import { ThemeType, Candidate } from '@/data/types';
 import { candidateData } from '@/data/candidates';
-// 스타일 컴포넌트 정의
+import SmallButton from '@/components/atoms/SmallButton';
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
-  height: 100vh;
-  margin: 0 1rem;
-  gap: 1rem;
+  gap: 3rem;
+
+  padding: 0 1.25rem;
+  height: 100dvh;
+
+  text-align: center;
 `;
 
 const CardWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, auto));
+  gap: 1rem 0.5rem;
+  width: 100%;
+`;
+
+const ButtonArea = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 1rem;
-  justify-content: center;
-`;
 
-// StyledCard: Card를 확장하여 스타일링
-const StyledCard = styled(Card).withConfig({
-  shouldForwardProp: (prop) => !['isSelected'].includes(prop),
-})<{ isSelected: boolean }>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 10rem;
-  height: 6rem;
-  border: 1px solid
-    ${({ isSelected, theme }) =>
-      isSelected ? theme.colors.primary : theme.colors.gray[300]};
-  border-radius: 8px;
-  background-color: ${({ isSelected, theme }) =>
-    isSelected ? theme.colors.primaryLight : '#fff'};
-  cursor: pointer;
-  transition:
-    background-color 0.3s,
-    border-color 0.3s;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.primaryLight};
-  }
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-`;
-
-const ActionButton = styled.button`
-  padding: 0.5rem 1rem;
-  background-color: ${({ theme }) => theme.colors.primary};
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-
-  &:disabled {
-    background-color: ${({ theme }) => theme.colors.gray[300]};
-    cursor: not-allowed;
-  }
+  width: 100%;
 `;
 
 export default function VotePage() {
@@ -78,10 +45,6 @@ export default function VotePage() {
     null,
   );
   const [voteConfirmed, setVoteConfirmed] = useState(false);
-
-  const handleBack = () => {
-    router.push('/');
-  };
 
   const handleVoteResult = () => {
     router.push(`/vote/${params.theme}/result`);
@@ -109,25 +72,26 @@ export default function VotePage() {
   return (
     <Container>
       <Text variant="header1">{pageTitle}</Text>
+
       <CardWrapper>
         {candidates.map((candidate) => (
-          <StyledCard
+          <SmallButton.Secondary
             key={candidate.id}
             isSelected={selectedCandidate?.id === candidate.id}
-            size="small"
-            title={candidate.name}
+            text={candidate.name}
             onClick={() => setSelectedCandidate(candidate)}
           />
         ))}
       </CardWrapper>
-      <ButtonWrapper>
+
+      <ButtonArea>
         <CTAButton
-          onClick={handleVote}
-          disabled={!selectedCandidate || voteConfirmed}
+          type="submit"
           text="투표하기"
+          disabled={!selectedCandidate}
         />
-        <CTAButton onClick={handleVoteResult} text="결과보기" />
-      </ButtonWrapper>
+        <CTAButton type="submit" text="결과 보기" variant="secondary" />
+      </ButtonArea>
     </Container>
   );
 }

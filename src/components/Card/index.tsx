@@ -16,11 +16,13 @@ const CardWrapper = styled.div<{ selected?: boolean }>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  // width: 100%;
+
+  padding: 0.75rem 1.25rem;
+
+  border: 1px solid ${({ theme }) => theme.colors.primary[100]};
+  border-radius: 0.5rem;
+
   cursor: pointer;
-  border: 2px solid ${({ theme }) => theme.colors.primary[100]};
-  border-radius: 8px;
-  padding: 1rem;
   transition: all 0.3s ease;
 
   &:hover {

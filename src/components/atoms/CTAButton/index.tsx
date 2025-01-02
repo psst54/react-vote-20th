@@ -18,7 +18,25 @@ const getBackgroundColor = ({
   if (variant === 'primary') {
     return theme.colors.primary[100];
   }
-  return theme.colors.gray[900];
+  return 'transparent';
+};
+
+const getBorder = ({
+  theme,
+  variant,
+  disabled,
+}: {
+  theme: DefaultTheme;
+  variant: Variant;
+  disabled: boolean;
+}) => {
+  if (disabled) {
+    return 'none';
+  }
+  if (variant === 'primary') {
+    return 'none';
+  }
+  return `1px solid ${theme.colors.primary[100]}`;
 };
 
 const Button = styled.button<{ variant: Variant; disabled: boolean }>`
@@ -27,7 +45,7 @@ const Button = styled.button<{ variant: Variant; disabled: boolean }>`
   background: ${(props) => getBackgroundColor(props)};
 
   outline: none;
-  border: none;
+  border: ${(props) => getBorder(props)};
   border-radius: 0.5rem;
 
   cursor: pointer;
@@ -53,7 +71,7 @@ export default function CTAButton({
   return (
     <Button type={type} variant={variant} disabled={disabled} onClick={onClick}>
       {disabled ? (
-        <ButtonText variant="title2">{text}</ButtonText>
+        <ButtonText variant="title3">{text}</ButtonText>
       ) : (
         <Text variant="title3">{text}</Text>
       )}

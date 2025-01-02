@@ -13,7 +13,7 @@ export const candidateData: Record<ThemeType, Candidate[]> = {
     { id: 8, name: '이가빈' },
     { id: 9, name: '지민재' },
     { id: 10, name: '권혜인' },
-  ].sort((a, b) => b.name.localeCompare(a.name)), // 이름 내림차순 정렬
+  ].sort((a, b) => a.name.localeCompare(b.name)), // 이름 내림차순 정렬
 
   'back-end': [
     { id: 11, name: '황서아' },
@@ -26,7 +26,7 @@ export const candidateData: Record<ThemeType, Candidate[]> = {
     { id: 18, name: '남승현' },
     { id: 19, name: '나혜인' },
     { id: 20, name: '김연수' },
-  ].sort((a, b) => b.name.localeCompare(a.name)), // 이름 내림차순 정렬
+  ].sort((a, b) => a.name.localeCompare(b.name)), // 이름 내림차순 정렬
 
   'demo-day': [
     { id: 21, name: '페달지니' },
@@ -34,5 +34,5 @@ export const candidateData: Record<ThemeType, Candidate[]> = {
     { id: 23, name: '커피딜' },
     { id: 24, name: '엔젤브릿지' },
     { id: 25, name: '포토그라운드' },
-  ].sort((a, b) => b.name.localeCompare(a.name)), // 이름 내림차순 정렬
+  ].sort((a, b) => a.name.localeCompare(b.name)), // 이름 내림차순 정렬
 };

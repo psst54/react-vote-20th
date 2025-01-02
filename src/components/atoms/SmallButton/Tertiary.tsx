@@ -7,10 +7,6 @@ const TertiaryButton = styled(Button)`
   border: 1px solid ${({ theme }) => theme.colors.primary[100]};
 `;
 
-const ButtonText = styled(Text)`
-  color: ${({ theme }) => theme.colors.primary[100]};
-`;
-
 export default function Tertiary({
   text,
   onClick = () => {},
@@ -20,7 +16,7 @@ export default function Tertiary({
 }) {
   return (
     <TertiaryButton onClick={onClick}>
-      <ButtonText variant="body3">{text}</ButtonText>
+      <Text variant="title1_rg">{text}</Text>
     </TertiaryButton>
   );
 }
