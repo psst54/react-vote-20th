@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import EmailIcon from "@/assets/EmailIcon";
-import PasswordIcon from "@/assets/PasswordIcon";
+import styled from 'styled-components';
+import EmailIcon from '@/assets/EmailIcon';
+import PasswordIcon from '@/assets/PasswordIcon';
 
 const Container = styled.div`
   display: flex;
@@ -37,7 +37,7 @@ export default function InputList() {
     <Container>
       <InputContainer>
         <EmailIcon size="1.25rem" />
-        <Input placeholder="이메일" />
+        <Input type="email" placeholder="이메일" />
       </InputContainer>
       <InputContainer>
         <PasswordIcon size="1.25rem" />
