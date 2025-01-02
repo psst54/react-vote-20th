@@ -1,18 +1,16 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Section = styled.section`
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
+  padding: 1.25rem;
 `;
 
 export const AccountSection = styled(Section)`
-  padding-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
-export const UserSection = styled(Section)`
-  padding-top: 3rem;
-  padding-bottom: 4rem;
-`;
+export const UserSection = styled(Section)``;
 
 export const ButtonWrapper = styled.div`
   padding: 0 1.25rem 1rem 1.25rem;

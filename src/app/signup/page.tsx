@@ -1,20 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import CTAButton from '@/components/atoms/CTAButton';
 import Text from '@/components/atoms/Text';
 import {
   AccountSection,
   ButtonWrapper,
-  DivideLine,
   UserSection,
 } from '../_components/styles';
-import EmailInput from '../_components/EmailInput';
-import PasswordInput from '../_components/PasswordInput';
-import NameInput from '../_components/NameInput';
 import Dropdown from '../_components/Dropdown';
 import styled from 'styled-components';
-import onSubmit from '../_lib/signup';
+import signUp from '../_lib/signup';
+import { Input, InputContainer } from '@/styles/input';
+import PersonIcon from '@/assets/PersonIcon';
+import PasswordIcon from '@/assets/PasswordIcon';
+import EmailIcon from '@/assets/EmailIcon';
 
 const DropdownContainer = styled.div`
   display: flex;
@@ -22,20 +22,18 @@ const DropdownContainer = styled.div`
   padding: 1rem 0;
 `;
 
-type FormState = {
-  message: string | null;
-  formData: {
-    id: string;
-    password: string;
-    email: string;
-  } | null;
-};
-
 export default function Main() {
-  // 초기 상태에 formData를 null로 설정
-  const [state, setState] = useState<FormState>({
-    message: null,
-    formData: null,
+  // const [state, setState] = useState<FormState>({
+  //   message: null,
+  // });
+
+  const [data, setData] = useState({
+    username: '',
+    password: '',
+    email: '',
+    name: '',
+    team: '',
+    part: '',
   });
 
   const [pending, setPending] = useState(false);
@@ -43,16 +41,17 @@ export default function Main() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = new FormData(e.currentTarget);
+    const formData = new FormData();
+    formData.set('username', data.username);
+    formData.set('password', data.password);
+    formData.set('email', data.email);
+    formData.set('team', data.team);
+    formData.set('part', data.part);
 
     setPending(true);
+
     try {
-      const result = await onSubmit(state, formData); // 수정된 타입에 맞게 호출
-      setState(result);
-      if (result.message === 'signup_success') {
-        console.log('Signup successful!');
-        console.log(result.formData);
-      }
+      await signUp(formData);
     } catch (error) {
       console.error('Error during signup:', error);
     } finally {
@@ -60,54 +59,94 @@ export default function Main() {
     }
   };
 
+  const FIELD_LIST: {
+    field: 'username' | 'password' | 'email' | 'name';
+    placeholder: string;
+    type: string;
+    icon: ({ size }: { size: string }) => ReactNode;
+  }[] = [
+    {
+      field: 'name',
+      placeholder: '이름',
+      type: 'text',
+      icon: PersonIcon,
+    },
+    {
+      field: 'username',
+      placeholder: '아이디',
+      type: 'text',
+      icon: PersonIcon,
+    },
+    {
+      field: 'password',
+      placeholder: '비밀번호',
+      type: 'password',
+      icon: PasswordIcon,
+    },
+    {
+      field: 'email',
+      placeholder: '이메일',
+      type: 'email',
+      icon: EmailIcon,
+    },
+  ];
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <AccountSection>
-          <Text variant="header1">SIGN UP!</Text>
-          <NameInput />
-          <PasswordInput />
-          <EmailInput />
-        </AccountSection>
-        {state.message && (
-          <Text variant="body3" style={{ color: 'red' }}>
-            {state.message === 'no_id' && '아이디를 입력해주세요'}
-            {state.message === 'no_password' && '비밀번호를 입력해주세요'}
-            {state.message === 'no_email' && '이메일을 입력해주세요'}
-            {state.message === 'user_exists' && '이미 존재하는 사용자입니다'}
-            {state.message === 'server_error' && '서버 오류가 발생했습니다'}
-          </Text>
-        )}
-        <DivideLine />
+    <form onSubmit={handleSubmit}>
+      <AccountSection>
+        <Text variant="header1">SIGN UP!</Text>
 
-        <UserSection>
-          <Text variant="title3">팀 명 / 파트</Text>
-          <DropdownContainer>
-            <Dropdown
-              options={[
-                { value: 'Photo Ground', label: 'photoGround' },
-                { value: 'Angle Bridge', label: 'angleBridge' },
-                { value: 'Coffee Deal', label: 'coffeeDeal' },
-              ]}
-              placeholder="팀 명"
-              onSelect={(value) => console.log('Selected:', value)}
-            />
+        {FIELD_LIST.map((fieldItem) => {
+          const { placeholder, field, type } = fieldItem;
+          const value = data[field];
 
-            <Dropdown
-              options={[
-                { value: 'Front-End', label: 'frontend' },
-                { value: 'Back-End', label: 'backend' },
-              ]}
-              placeholder="파트"
-              onSelect={(value) => console.log('Selected:', value)}
-            />
-          </DropdownContainer>
-        </UserSection>
+          return (
+            <InputContainer key={field}>
+              <fieldItem.icon size="1.5rem" />
+              <Input
+                value={value}
+                onChange={(event) => {
+                  const newData = { ...data };
+                  newData[field] = event.target.value;
+                  setData(newData);
+                }}
+                placeholder={placeholder}
+                type={type}
+                required
+              />
+            </InputContainer>
+          );
+        })}
+      </AccountSection>
 
-        <ButtonWrapper>
-          <CTAButton text="가입하기" disabled={pending} />
-        </ButtonWrapper>
-      </form>
-    </div>
+      <UserSection>
+        <DropdownContainer>
+          <Dropdown
+            options={[
+              { label: '포토그라운드', value: 'PHOTO_GROUND' },
+              { label: '앤젤브릿지', value: 'ANGEL_BRIDGE' },
+              { label: '페달지니', value: 'PEDAL_GENIE' },
+              { label: '케이크WAY', value: 'CAKE_WAY' },
+              { label: '커피딜', value: 'CUPFEE_DEAL' },
+            ]}
+            placeholder="팀 명"
+            onSelect={(value) => setData({ ...data, team: value })}
+          />
+
+          <Dropdown
+            options={[
+              { value: 'FRONTEND', label: 'FRONTEND' },
+              { value: 'BACKEND', label: 'BACKEND' },
+            ]}
+            placeholder="파트"
+            onSelect={(value) => setData({ ...data, part: value })}
+          />
+        </DropdownContainer>
+      </UserSection>
+
+      <ButtonWrapper>
+        <CTAButton type="submit" text="가입하기" disabled={pending} />
+      </ButtonWrapper>
+    </form>
   );
 }

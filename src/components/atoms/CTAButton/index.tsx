@@ -38,18 +38,20 @@ const ButtonText = styled(Text)`
 `;
 
 export default function CTAButton({
+  type = 'button',
   text,
   variant = 'primary',
   disabled = false,
   onClick = () => {},
 }: {
+  type: 'button' | 'submit';
   text: string;
   variant?: Variant;
   disabled?: boolean;
   onClick?: () => void;
 }) {
   return (
-    <Button variant={variant} disabled={disabled} onClick={onClick}>
+    <Button type={type} variant={variant} disabled={disabled} onClick={onClick}>
       {disabled ? (
         <ButtonText variant="title2">{text}</ButtonText>
       ) : (
