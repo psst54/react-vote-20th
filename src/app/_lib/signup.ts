@@ -6,19 +6,12 @@ import { redirect } from 'next/navigation';
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:4000';
 
 export default async function signUp(
-  formData: FormData,
+  data: object,
 ): Promise<{ message?: string }> {
   try {
     const response = await fetch(`${BASE_URL}/api/member/join`, {
       method: 'POST',
-      body: JSON.stringify({
-        name: formData.get('name'),
-        username: formData.get('username'),
-        password: formData.get('password'),
-        email: formData.get('email'),
-        part: formData.get('part'),
-        team: formData.get('team'),
-      }),
+      body: JSON.stringify(data),
       headers: { 'Content-Type': 'application/json' },
     });
 

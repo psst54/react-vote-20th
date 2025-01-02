@@ -22,11 +22,39 @@ const DropdownContainer = styled.div`
   padding: 1rem 0;
 `;
 
-export default function Main() {
-  // const [state, setState] = useState<FormState>({
-  //   message: null,
-  // });
+const FIELD_LIST: {
+  field: 'username' | 'password' | 'email' | 'name';
+  placeholder: string;
+  type: string;
+  icon: ({ size }: { size: string }) => ReactNode;
+}[] = [
+  {
+    field: 'name',
+    placeholder: '이름',
+    type: 'text',
+    icon: PersonIcon,
+  },
+  {
+    field: 'username',
+    placeholder: '아이디',
+    type: 'text',
+    icon: PersonIcon,
+  },
+  {
+    field: 'password',
+    placeholder: '비밀번호',
+    type: 'password',
+    icon: PasswordIcon,
+  },
+  {
+    field: 'email',
+    placeholder: '이메일',
+    type: 'email',
+    icon: EmailIcon,
+  },
+];
 
+export default function Main() {
   const [data, setData] = useState({
     username: '',
     password: '',
@@ -41,55 +69,16 @@ export default function Main() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.set('username', data.username);
-    formData.set('password', data.password);
-    formData.set('email', data.email);
-    formData.set('team', data.team);
-    formData.set('part', data.part);
-
     setPending(true);
 
     try {
-      await signUp(formData);
+      await signUp(data);
     } catch (error) {
       console.error('Error during signup:', error);
     } finally {
       setPending(false);
     }
   };
-
-  const FIELD_LIST: {
-    field: 'username' | 'password' | 'email' | 'name';
-    placeholder: string;
-    type: string;
-    icon: ({ size }: { size: string }) => ReactNode;
-  }[] = [
-    {
-      field: 'name',
-      placeholder: '이름',
-      type: 'text',
-      icon: PersonIcon,
-    },
-    {
-      field: 'username',
-      placeholder: '아이디',
-      type: 'text',
-      icon: PersonIcon,
-    },
-    {
-      field: 'password',
-      placeholder: '비밀번호',
-      type: 'password',
-      icon: PasswordIcon,
-    },
-    {
-      field: 'email',
-      placeholder: '이메일',
-      type: 'email',
-      icon: EmailIcon,
-    },
-  ];
 
   return (
     <form onSubmit={handleSubmit}>
