@@ -7,6 +7,7 @@ import CTAButton from '@/components/atoms/CTAButton';
 import SmallButton from '@/components/atoms/SmallButton';
 import { Candidate } from '@/data/types';
 import voteFE from './action';
+import Link from 'next/link';
 
 const Container = styled.div`
   display: flex;
@@ -45,17 +46,6 @@ export default function VoteScreen({
     null,
   );
 
-  //   const handleVoteResult = () => {
-  //     router.push(`/vote/${params.theme}/result`);
-  //   };
-
-  //   const handleVote = () => {
-  //     if (selectedCandidate) {
-  //       alert(`${selectedCandidate.name}에게 투표되었습니다.`);
-  //       setVoteConfirmed(true);
-  //     }
-  //   };
-
   return (
     <Container>
       <Text variant="header1">FE 파트장 투표</Text>
@@ -80,7 +70,9 @@ export default function VoteScreen({
             voteFE(selectedCandidate!.id);
           }}
         />
-        <CTAButton type="submit" text="결과 보기" variant="secondary" />
+        <Link href="/vote/front-end/result">
+          <CTAButton type="submit" text="결과 보기" variant="secondary" />
+        </Link>
       </ButtonArea>
     </Container>
   );

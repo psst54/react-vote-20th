@@ -1,7 +1,6 @@
 'use client';
 
 import { ReactNode, useState } from 'react';
-import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import styled from 'styled-components';
@@ -11,6 +10,8 @@ import CTAButton from '@/components/atoms/CTAButton';
 import PersonIcon from '@/assets/PersonIcon';
 import PasswordIcon from '@/assets/PasswordIcon';
 import { Input, InputContainer } from '@/styles/input';
+import signIn from '../_lib/signin';
+import { setAccessToken } from '../token';
 
 const FIELD_LIST: {
   field: 'username' | 'password';
@@ -76,17 +77,12 @@ export default function SignInPage() {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const result = await signIn('credentials', {
-      redirect: false, // 서버 리다이렉션 방지
-      id: data.username,
-      password: data.password,
-    });
+    const accessToken = await signIn(data);
 
-    if (result?.error) {
-      alert('로그인 실패: 아이디 또는 비밀번호를 확인하세요.');
-    } else {
-      // 로그인 성공 시 홈으로 이동
+    if (accessToken) {
       router.push('/home');
+    } else {
+      alert('로그인 실패: 아이디 또는 비밀번호를 확인하세요.');
     }
   };
 
@@ -123,7 +119,7 @@ export default function SignInPage() {
       </Form>
 
       <StyledLink href="/signup">
-        <SignUpText variant="caption1_rg">회원가입 </SignUpText>
+        <SignUpText variant="caption1_rg">회원가입</SignUpText>
       </StyledLink>
     </Container>
   );

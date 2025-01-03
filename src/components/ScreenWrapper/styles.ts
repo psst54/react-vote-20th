@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 export const FullPage = styled.div`
   height: 100dvh;
+  overflow: auto;
 `;
 
 export const Container = styled.div`
