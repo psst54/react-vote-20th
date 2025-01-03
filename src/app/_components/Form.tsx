@@ -1,9 +1,9 @@
-import CTAButton from "@/components/atoms/CTAButton";
-import Text from "@/components/atoms/Text";
-import { convertToViewportHeight } from "@/styles/convertSize";
-import Link from "next/link";
-import styled from "styled-components";
-import InputList from "./InputList";
+import CTAButton from '@/components/atoms/CTAButton';
+import Text from '@/components/atoms/Text';
+import { convertToViewportHeight } from '@/styles/convertSize';
+import Link from 'next/link';
+import styled from 'styled-components';
+import InputList from './InputList';
 
 const Form = styled.form`
   display: flex;
@@ -45,7 +45,7 @@ export default function SignInForm() {
         </StyledLink>
       </Wrapper>
 
-      <CTAButton text="로그인" />
+      <CTAButton type="button" text="로그인" />
     </Form>
   );
 }

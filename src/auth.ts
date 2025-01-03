@@ -19,8 +19,6 @@ export const authOptions: NextAuthOptions = {
           throw new Error('No credentials provided');
         }
 
-        console.log('!@@!#!@#@');
-
         const formData = new FormData();
 
         formData.set('username', credentials.id);

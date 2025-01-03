@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mswjs/http-middleware": "^0.10.2",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
     "msw": "^2.7.0",
     "next": "15.1.2",
     "next-auth": "^4.24.11",
@@ -18,6 +21,8 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

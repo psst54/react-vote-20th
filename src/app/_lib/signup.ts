@@ -15,8 +15,6 @@ export default async function signUp(
       headers: { 'Content-Type': 'application/json' },
     });
 
-    console.log(response);
-
     if (!response.ok) {
       throw new Error('Failed to sign up');
     }
