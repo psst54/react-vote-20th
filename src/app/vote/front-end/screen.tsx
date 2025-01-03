@@ -1,13 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import styled from 'styled-components';
+
 import Text from '@/components/atoms/Text';
 import CTAButton from '@/components/atoms/CTAButton';
 import SmallButton from '@/components/atoms/SmallButton';
 import { Candidate } from '@/data/types';
 import voteFE from './action';
-import Link from 'next/link';
 
 const Container = styled.div`
   display: flex;
@@ -67,7 +68,9 @@ export default function VoteScreen({
           text="투표하기"
           disabled={!selectedCandidate}
           onClick={() => {
-            voteFE(selectedCandidate!.id);
+            voteFE(selectedCandidate!.id).then((response) => {
+              alert(response);
+            });
           }}
         />
         <Link href="/vote/front-end/result">

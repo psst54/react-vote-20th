@@ -2,7 +2,7 @@
 
 import { cookies } from 'next/headers';
 
-export default async function voteFE(leaderId: number) {
+export default async function voteBE(leaderId: number) {
   try {
     const formData = new FormData();
     formData.set('leaderId', leaderId.toString());
@@ -11,7 +11,7 @@ export default async function voteFE(leaderId: number) {
     const accessToken = cookieStore.get('access_token')?.value!;
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/votes/leader?part=FRONTEND`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/votes/leader?part=BACKEND`,
       {
         method: 'POST',
         headers: {
