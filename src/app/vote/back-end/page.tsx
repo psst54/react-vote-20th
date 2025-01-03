@@ -30,3 +30,5 @@ export default async function VotePage() {
 
   return <VoteScreen candidateList={candidateList} />;
 }
+
+export const runtime = 'edge';

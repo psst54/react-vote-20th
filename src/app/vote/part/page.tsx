@@ -39,3 +39,5 @@ export default function VotePage() {
     </Container>
   );
 }
+
+export const runtime = 'edge';

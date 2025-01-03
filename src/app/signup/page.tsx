@@ -139,3 +139,5 @@ export default function Main() {
     </form>
   );
 }
+
+export const runtime = 'edge';

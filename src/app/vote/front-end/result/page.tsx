@@ -40,3 +40,5 @@ export default async function VoteResultPage() {
 
   return <VoteResultScreen resultList={resultList} />;
 }
+
+export const runtime = 'edge';

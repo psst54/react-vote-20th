@@ -11,7 +11,6 @@ import PersonIcon from '@/assets/PersonIcon';
 import PasswordIcon from '@/assets/PasswordIcon';
 import { Input, InputContainer } from '@/styles/input';
 import signIn from '../_lib/signin';
-import { setAccessToken } from '../token';
 
 const FIELD_LIST: {
   field: 'username' | 'password';
@@ -124,3 +123,5 @@ export default function SignInPage() {
     </Container>
   );
 }
+
+export const runtime = 'edge';
