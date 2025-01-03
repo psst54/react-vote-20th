@@ -1,12 +1,11 @@
 'use server';
 
-import { access } from 'fs';
 import { cookies } from 'next/headers';
 
 export default async function signIn(data: {
   username: string;
   password: string;
-}): Promise<string | null> {
+}): Promise<boolean> {
   try {
     const formData = new FormData();
 
@@ -43,8 +42,8 @@ export default async function signIn(data: {
       path: '/',
     });
 
-    return accessToken;
+    return true;
   } catch (err) {
-    return null;
+    return false;
   }
 }
