@@ -6,6 +6,7 @@ import Text from '@/components/atoms/Text';
 import CTAButton from '@/components/atoms/CTAButton';
 import SmallButton from '@/components/atoms/SmallButton';
 import { Candidate } from '@/data/types';
+import voteFE from './action';
 
 const Container = styled.div`
   display: flex;
@@ -75,6 +76,9 @@ export default function VoteScreen({
           type="submit"
           text="투표하기"
           disabled={!selectedCandidate}
+          onClick={() => {
+            voteFE(selectedCandidate!.id);
+          }}
         />
         <CTAButton type="submit" text="결과 보기" variant="secondary" />
       </ButtonArea>
